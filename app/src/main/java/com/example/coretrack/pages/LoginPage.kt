@@ -118,14 +118,14 @@ fun LoginPage(modifier: Modifier = Modifier, navController: NavController, authV
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            Text(text = "Login Page", fontSize = 32.sp, color = MaterialTheme.colorScheme.onPrimary)
+            Text(text = "Welcome! Stay active, stay healthy.", fontWeight = FontWeight.Thin, fontFamily = Parkinsans, fontSize = 16.sp, color = MaterialTheme.colorScheme.onPrimary)
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text(text = "Email", color = MaterialTheme.colorScheme.onPrimary)},
+                label = { Text(text = "Email", fontFamily = Parkinsans, color = MaterialTheme.colorScheme.onPrimary)},
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
                     unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
@@ -142,7 +142,7 @@ fun LoginPage(modifier: Modifier = Modifier, navController: NavController, authV
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text(text = "Password", color = MaterialTheme.colorScheme.onPrimary) },
+                label = { Text(text = "Password", fontFamily = Parkinsans, color = MaterialTheme.colorScheme.onPrimary) },
                 visualTransformation = PasswordVisualTransformation(),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
@@ -163,7 +163,7 @@ fun LoginPage(modifier: Modifier = Modifier, navController: NavController, authV
                     containerColor = MaterialTheme.colorScheme.secondary
                 )
             ) {
-                Text(text = "LOGIN", color = MaterialTheme.colorScheme.primary)
+                Text(text = "LOGIN", fontFamily = Parkinsans, color = MaterialTheme.colorScheme.primary)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -173,7 +173,7 @@ fun LoginPage(modifier: Modifier = Modifier, navController: NavController, authV
                     navController.navigate("register")
                 }
             ) {
-                Text(text = "Don't have an account? Register", color = MaterialTheme.colorScheme.tertiary)
+                Text(text = "Don't have an account? Register", fontFamily = Parkinsans, color = MaterialTheme.colorScheme.tertiary)
             }
         }
     }
