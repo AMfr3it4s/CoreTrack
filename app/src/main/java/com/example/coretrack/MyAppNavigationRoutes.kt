@@ -65,7 +65,7 @@ fun Navigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
                     backStackEntry ->
                 val isDarkMode by remember { mutableStateOf(false) }
                 val onToggleTheme: (Boolean) -> Unit = { newMode ->
-                    // Lógica para alternar entre os modos claro e escuro
+                  //Todo
                 }
                 ActivitiesPage(
                     navController = navController,
