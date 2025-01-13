@@ -11,9 +11,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -44,24 +48,39 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController, authVi
     }
 
     Column (
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize()
+            .background(MaterialTheme.colorScheme
+                .primary),
     ){
         //Stats GraphSteps per Week
         Box (
             modifier = Modifier
                 .fillMaxWidth()
                 .height(350.dp)
-                .background(Color.Blue)
+                .background(MaterialTheme.colorScheme.primary)
+
         ){
-            Text(
-                text = "Weakly Activity Report",
+            Column (
                 modifier = Modifier
-                    .padding(15.dp)
-                    .align(
-                        Alignment.TopStart
-                    )
-                , color = MaterialTheme.colorScheme.primary, fontSize = 15.sp, fontFamily = Parkinsans, fontWeight =
-            FontWeight.Bold)
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.primary),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+
+            ){
+                Text(
+                    text = "Weakly Activity Report",
+                    modifier = Modifier
+                        .padding(15.dp)
+                    , color = MaterialTheme.colorScheme.surface, fontSize = 15.sp, fontFamily = Parkinsans, fontWeight =
+                    FontWeight.Bold)
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                LineChartScreen()
+            }
+
+
         }
 
         Card (
@@ -69,9 +88,10 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController, authVi
                 .fillMaxWidth()
                 .height(200.dp)
                 .padding(16.dp)
-                .background(Color(0xFFE3F2FD)),
+                .background(MaterialTheme.colorScheme.primary),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.secondary
+                containerColor = MaterialTheme.colorScheme.secondary,
+
             )
 
         ){
@@ -79,6 +99,33 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController, authVi
                 modifier = Modifier
                     .padding(10.dp)
                 , fontSize = 14.sp, fontWeight = FontWeight.Normal, fontFamily = Parkinsans, color = MaterialTheme.colorScheme.primary)
+            Row (
+                modifier = Modifier
+                    .padding(25.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Icon(
+                    Icons.Filled.Favorite,
+                    contentDescription = "HeartRate",
+                    tint = MaterialTheme.colorScheme.tertiary,
+                    modifier = Modifier.size(50.dp)
+                )
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Text(text = "Heart Rate", fontFamily = Parkinsans, fontSize = 25.sp, fontWeight = FontWeight.Normal, color = MaterialTheme.colorScheme.primary)
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                //To be modified to change dynamicaly
+                Text(text = "60", fontFamily = Parkinsans, fontSize = 35.sp, fontWeight = FontWeight.Normal, color = MaterialTheme.colorScheme.primary)
+
+                Spacer(modifier = Modifier.width(5.dp))
+
+                Text(text = "bpm", fontFamily = Parkinsans, fontSize = 15.sp, fontWeight = FontWeight.Normal, color = MaterialTheme.colorScheme.primary)
+            }
 
         }
 
@@ -94,7 +141,7 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController, authVi
                     .height(140.dp)
                     .width(135.dp)
                     .padding(8.dp)
-                    .background(Color(0xFFE3F2FD)),
+                    .background(MaterialTheme.colorScheme.primary),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.secondary
                 )
@@ -108,6 +155,22 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController, authVi
                         modifier = Modifier
                             .padding(5.dp)
                         , fontSize = 14.sp, fontWeight = FontWeight.Normal, fontFamily = Parkinsans, color = MaterialTheme.colorScheme.primary)
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Row{
+                        Text(text = "2000",
+                            modifier = Modifier
+                                .padding(5.dp)
+                            , fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = Parkinsans, color = MaterialTheme.colorScheme.primary)
+
+
+                        Text(text = "Kcal",
+                            modifier = Modifier
+                                .padding(7.dp)
+                            , fontSize = 10.sp, fontWeight = FontWeight.Normal, fontFamily = Parkinsans, color = MaterialTheme.colorScheme.primary)
+                    }
+
                 }
             }
 
@@ -117,7 +180,7 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController, authVi
                     .height(140.dp)
                     .width(135.dp)
                     .padding(8.dp)
-                    .background(Color(0xFFE3F2FD)),
+                    .background(MaterialTheme.colorScheme.primary),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.secondary
                 )
@@ -130,6 +193,21 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController, authVi
                         modifier = Modifier
                             .padding(5.dp)
                         , fontSize = 14.sp, fontWeight = FontWeight.Normal, fontFamily = Parkinsans, color = MaterialTheme.colorScheme.primary)
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Row{
+                        Text(text = "10",
+                            modifier = Modifier
+                                .padding(5.dp)
+                            , fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = Parkinsans, color = MaterialTheme.colorScheme.primary)
+
+
+                        Text(text = "Km",
+                            modifier = Modifier
+                                .padding(7.dp)
+                            , fontSize = 10.sp, fontWeight = FontWeight.Normal, fontFamily = Parkinsans, color = MaterialTheme.colorScheme.primary)
+                    }
                 }
             }
 
@@ -139,7 +217,7 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController, authVi
                     .height(140.dp)
                     .width(135.dp)
                     .padding(8.dp)
-                    .background(Color(0xFFE3F2FD)),
+                    .background(MaterialTheme.colorScheme.primary),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.secondary
                 )
@@ -152,6 +230,21 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController, authVi
                         modifier = Modifier
                             .padding(5.dp)
                         , fontSize = 14.sp, fontWeight = FontWeight.Normal, fontFamily = Parkinsans , color = MaterialTheme.colorScheme.primary)
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Row{
+                        Text(text = "60",
+                            modifier = Modifier
+                                .padding(5.dp)
+                            , fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = Parkinsans, color = MaterialTheme.colorScheme.primary)
+
+
+                        Text(text = "Min",
+                            modifier = Modifier
+                                .padding(7.dp)
+                            , fontSize = 10.sp, fontWeight = FontWeight.Normal, fontFamily = Parkinsans, color = MaterialTheme.colorScheme.primary)
+                    }
                 }
             }
         }
