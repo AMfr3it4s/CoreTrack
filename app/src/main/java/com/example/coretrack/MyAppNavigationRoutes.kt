@@ -18,9 +18,14 @@ import com.example.coretrack.pages.HeartPage
 import com.example.coretrack.pages.HomePage
 import com.example.coretrack.pages.LoginPage
 import com.example.coretrack.pages.RegisterPage
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun Navigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
+fun Navigation(
+    modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel,
+    userId: String
+) {
     val navController = rememberNavController()
     Scaffold(
         modifier = modifier,
@@ -59,7 +64,10 @@ fun Navigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
                 )
             }
             composable("heart") {
-                HeartPage(navController = navController)
+                HeartPage(
+                    navController = navController,
+                    userId = userId
+                )
             }
             composable("activities") {
                     backStackEntry ->

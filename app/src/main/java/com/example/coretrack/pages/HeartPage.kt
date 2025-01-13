@@ -22,10 +22,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.coretrack.camera.CameraPreviewWithAnalysis
+import com.example.coretrack.database.AppDatabase
 import com.example.coretrack.model.HistoryRecord
+import com.example.coretrack.repository.HistoryRepository
 import com.example.coretrack.ui.components.HeartRateChart
 import com.example.coretrack.ui.components.HistoryCard
-import com.example.coretrack.util.calculateBPM
+import com.example.coretrack.utils.calculateBPM
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 
 @Composable
@@ -62,21 +65,32 @@ fun CameraPermissionRequest(
 @Composable
 fun HeartPage(
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    userId: String,
 ) {
+    val context = LocalContext.current
+    val database = AppDatabase.getDatabase(context)
+    val repository = remember {
+        HistoryRepository(
+            localDataSource = database.historyRecordDao(),
+            remoteDataSource = FirebaseFirestore.getInstance(),
+            userId = userId,
+            context = context
+        )
+    }
     // Store real-time data points
     val sensorData = remember { mutableStateListOf<Pair<Long, Double>>() }
     // Store heart rate history
     val history = remember { mutableStateListOf<HistoryRecord>() }
 
+    LaunchedEffect(Unit) {
+        val records = repository.getRecords()
+        history.addAll(records)
+    }
+
     // Toggles measurement
     val isMeasuring = remember { mutableStateOf(false) }
 
-    // We’ll remember the cameraProvider and lifecycle owner for initialization
-    val context = LocalContext.current
-    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
-
-    // For showing snackbars
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
@@ -87,7 +101,13 @@ fun HeartPage(
         // Show the history page
         HistoryPageInHeart(
             onBack = { showHistoryPage.value = false }, // tapping arrow sets this false
-            history = history
+            history = history,
+            coroutineScope = coroutineScope,
+            onDeleteRecord = { record ->
+                CoroutineScope(Dispatchers.IO).launch {
+                    repository.deleteRecord(record)
+                }
+            }
         )
     } else {
         // Show the main heart layout
@@ -97,7 +117,17 @@ fun HeartPage(
             history = history,
             showHistoryPage = showHistoryPage,
             snackbarHostState = snackbarHostState,
-            coroutineScope = coroutineScope
+            coroutineScope = coroutineScope,
+            onSaveRecord = { record ->
+                CoroutineScope(Dispatchers.IO).launch {
+                    // Save the record to the repository
+                    repository.saveRecord(record)
+                    withContext(Dispatchers.Main) {
+                        // Update the UI with the new record
+                        history.add(record)
+                    }
+                }
+            }
         )
     }
 }
@@ -110,7 +140,8 @@ fun HeartMainLayout(
     history: SnapshotStateList<HistoryRecord>,
     showHistoryPage: MutableState<Boolean>,
     snackbarHostState: SnackbarHostState,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    onSaveRecord: suspend (HistoryRecord) -> Unit,
 ) {
     CameraPermissionRequest {
         Scaffold(
@@ -162,7 +193,9 @@ fun HeartMainLayout(
                                                 bpm = bpm,
                                                 timestamp = System.currentTimeMillis(),
                                             )
-                                            history.add(record)
+                                            coroutineScope.launch {
+                                                onSaveRecord(record)
+                                            }
                                             coroutineScope.launch {
                                                 snackbarHostState.showSnackbar("Heart Beat Rate: $bpm bpm")
                                             }
@@ -209,7 +242,7 @@ fun HeartMainLayout(
                                 sensorData.add(now to avgRed)
                                 // Keep only a few seconds of data if you want
                                 if (sensorData.size > 300) {
-                                    sensorData.removeFirst()
+                                    sensorData.removeAt(0)
                                 }
                             }
                         )
@@ -238,7 +271,9 @@ fun HeartMainLayout(
                                         bpm = bpm,
                                         timestamp = System.currentTimeMillis(),
                                     )
-                                    history.add(record)
+                                    coroutineScope.launch {
+                                        onSaveRecord(record)
+                                    }
                                     coroutineScope.launch {
                                         snackbarHostState.showSnackbar("Heart Beat Rate: $bpm bpm")
                                     }
@@ -268,7 +303,9 @@ fun HeartMainLayout(
 @Composable
 fun HistoryPageInHeart(
     onBack: () -> Unit,
-    history: MutableList<HistoryRecord>
+    history: MutableList<HistoryRecord>,
+    coroutineScope: CoroutineScope,
+    onDeleteRecord: suspend (HistoryRecord) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -294,8 +331,10 @@ fun HistoryPageInHeart(
                     HistoryCard(
                         record,
                         onDelete = {
-                            // Remove the clicked item from history
-                            history.removeAt(index)
+                            coroutineScope.launch {
+                                onDeleteRecord(record)
+                                history.removeAt(index)
+                            }
                         }
                     )
                 }

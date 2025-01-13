@@ -1,4 +1,4 @@
-package com.example.coretrack.util
+package com.example.coretrack.utils
 
 /**
  * Calculate BPM from the collected sensor data over time.
