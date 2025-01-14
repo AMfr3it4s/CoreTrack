@@ -22,9 +22,15 @@ import com.example.coretrack.pages.LoginPage
 import com.example.coretrack.pages.Pedometer
 import com.example.coretrack.pages.RegisterPage
 import com.example.coretrack.pages.StepCounterViewModel
+import com.google.firebase.auth.FirebaseAuth
+
 
 @Composable
-fun Navigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
+fun Navigation(
+    modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel,
+    userId: String
+) {
     val navController = rememberNavController()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     Scaffold(
@@ -64,7 +70,10 @@ fun Navigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
                 )
             }
             composable("heart") {
-                HeartPage(navController = navController)
+                HeartPage(
+                    navController = navController,
+                    userId = userId
+                )
             }
             composable("activities") {
                     backStackEntry ->
