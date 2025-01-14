@@ -1,8 +1,5 @@
 [versions]
 agp = "8.6.0"
-androidxRoomCompiler = "2.5.0"
-cameraExtensions = "1.2.2"
-guava = "32.1.3-android"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -14,36 +11,15 @@ composeBom = "2024.04.01"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.1.0"
 navigationCompose = "2.8.5"
-roomCompiler = "2.5.1"
-roomCompilerVersion = "2.6.1"
-roomKtx = "2.5.0"
-roomRuntime = "2.6.1"
 runtimeLivedata = "1.7.6"
 accompanistPermissions = "0.30.0"
 playServicesLocation = "21.3.0"
 coreKtxVersion = "1.6.1"
 maps = "3.1.0-beta"
 playServicesMaps = "19.0.0"
-firebaseFirestoreKtx = "25.1.1"
-workRuntimeKtx = "2.10.0"
-
 
 [libraries]
-androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraExtensions" }
-androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraExtensions" }
-androidx-camera-extensions = { module = "androidx.camera:camera-extensions", version.ref = "cameraExtensions" }
-androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraExtensions" }
-androidx-camera-video = { module = "androidx.camera:camera-video", version.ref = "cameraExtensions" }
-androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraExtensions" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
-androidx-room-compiler-v250 = { module = "androidx.room:room-compiler", version.ref = "androidxRoomCompiler" }
-androidx-room-compiler-v261 = { module = "androidx.room:room-compiler", version.ref = "roomCompilerVersion" }
-androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomCompiler" }
-androidx-room-ktx-v250 = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
-androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
-guava = { module = "com.google.guava:guava", version.ref = "guava" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -66,7 +42,6 @@ play-services-location = { group = "com.google.android.gms", name = "play-servic
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
 maps = { group = "com.google.android.libraries.maps", name = "maps", version.ref = "maps" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
