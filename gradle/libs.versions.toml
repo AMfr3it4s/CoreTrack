@@ -19,14 +19,8 @@ roomCompilerVersion = "2.6.1"
 roomKtx = "2.5.0"
 roomRuntime = "2.6.1"
 runtimeLivedata = "1.7.6"
-accompanistPermissions = "0.30.0"
-playServicesLocation = "21.3.0"
-coreKtxVersion = "1.6.1"
-maps = "3.1.0-beta"
-playServicesMaps = "19.0.0"
 firebaseFirestoreKtx = "25.1.1"
 workRuntimeKtx = "2.10.0"
-
 
 [libraries]
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraExtensions" }
@@ -60,12 +54,6 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
-ycharts = { group = "co.yml", name = "ycharts", version = "2.1.0" }
-accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanistPermissions" }
-play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
-maps = { group = "com.google.android.libraries.maps", name = "maps", version.ref = "maps" }
-play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 
 [plugins]

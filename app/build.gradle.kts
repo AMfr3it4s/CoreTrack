@@ -11,11 +11,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.coretrack"
-
-
-        minSdk = 26
+        minSdk = 24
         targetSdk = 35
-
         versionCode = 1
         versionName = "1.0"
 
@@ -55,10 +52,6 @@ android {
 }
 
 dependencies {
-
-
-    implementation(libs.accompanist.permissions)
-    implementation(libs.ycharts)
     implementation(libs.androidx.camera.core)
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)
@@ -76,10 +69,6 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.runtime.livedata)
-    implementation(libs.play.services.location)
-    implementation(libs.core.ktx)
-    implementation(libs.maps)
-    implementation(libs.play.services.maps)
     implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
