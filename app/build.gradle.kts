@@ -2,16 +2,20 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    id("com.google.devtools.ksp")
 }
 
 android {
     namespace = "com.example.coretrack"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.coretrack"
+
+
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
+
         versionCode = 1
         versionName = "1.0"
 
@@ -52,8 +56,15 @@ android {
 
 dependencies {
 
+
     implementation(libs.accompanist.permissions)
     implementation(libs.ycharts)
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.video)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.extensions)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -69,6 +80,7 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.maps)
     implementation(libs.play.services.maps)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -76,4 +88,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.guava)
+    ksp(libs.androidx.room.compiler.v250)
+    implementation(libs.androidx.room.ktx.v250)
+    implementation(libs.androidx.work.runtime.ktx)
 }

@@ -16,6 +16,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.coretrack.pages.StepCounterViewModel
 import com.example.coretrack.ui.theme.CoreTrackTheme
+import com.example.coretrack.utils.NetworkUtils
+import com.example.coretrack.workers.scheduleSyncWorker
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
     private val stepCounterViewModel: StepCounterViewModel by viewModels()
@@ -37,10 +40,20 @@ class MainActivity : ComponentActivity() {
         }
 
         // Composable UI
+        val context = this
+        val userId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
+        val networkUtils = NetworkUtils(context)
+        networkUtils.isConnected().observe(this) { isConnected ->
+            if (isConnected) {
+                scheduleSyncWorker(context, userId) // Sync data when online
+            }
+        }
         setContent {
             CoreTrackTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Navigation(modifier = Modifier.padding(innerPadding), authViewModel = authViewModel)
+
+                    Navigation(modifier = Modifier.padding(innerPadding) ,authViewModel = authViewModel, userId = userId)
+
                 }
             }
         }
