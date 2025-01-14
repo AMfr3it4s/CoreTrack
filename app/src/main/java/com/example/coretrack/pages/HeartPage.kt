@@ -6,7 +6,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -105,6 +105,9 @@ fun HeartPage(
             coroutineScope = coroutineScope,
             onDeleteRecord = { record ->
                 CoroutineScope(Dispatchers.IO).launch {
+                    withContext(Dispatchers.Main) {
+                        history.remove(record) // Reflect changes in UI
+                    }
                     repository.deleteRecord(record)
                 }
             }
@@ -114,7 +117,6 @@ fun HeartPage(
         HeartMainLayout(
             isMeasuring = isMeasuring,
             sensorData = sensorData,
-            history = history,
             showHistoryPage = showHistoryPage,
             snackbarHostState = snackbarHostState,
             coroutineScope = coroutineScope,
@@ -137,7 +139,6 @@ fun HeartPage(
 fun HeartMainLayout(
     isMeasuring: MutableState<Boolean>,
     sensorData: SnapshotStateList<Pair<Long, Double>>,
-    history: SnapshotStateList<HistoryRecord>,
     showHistoryPage: MutableState<Boolean>,
     snackbarHostState: SnackbarHostState,
     coroutineScope: CoroutineScope,
@@ -184,7 +185,7 @@ fun HeartMainLayout(
                                 isMeasuring.value = true
                                 // Start 15s measurement
                                 coroutineScope.launch {
-                                    delay(15_000)
+                                    delay(10_000)
                                     if (isMeasuring.value) {
                                         isMeasuring.value = false
                                         val bpm = calculateBPM(sensorData)
@@ -303,7 +304,7 @@ fun HeartMainLayout(
 @Composable
 fun HistoryPageInHeart(
     onBack: () -> Unit,
-    history: MutableList<HistoryRecord>,
+    history: List<HistoryRecord>,
     coroutineScope: CoroutineScope,
     onDeleteRecord: suspend (HistoryRecord) -> Unit
 ) {
@@ -327,13 +328,12 @@ fun HistoryPageInHeart(
             .padding(innerPadding)
         ) {
             LazyColumn {
-                itemsIndexed(history) { index, record ->
+                items(history) { record ->
                     HistoryCard(
                         record,
                         onDelete = {
                             coroutineScope.launch {
                                 onDeleteRecord(record)
-                                history.removeAt(index)
                             }
                         }
                     )

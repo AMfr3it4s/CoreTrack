@@ -1,6 +1,7 @@
 package com.example.coretrack.workers
 
 import android.content.Context
+import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.coretrack.database.AppDatabase
@@ -27,11 +28,12 @@ class SyncWorker(
 
         return withContext(Dispatchers.IO) {
             try {
-                // Push unsynced local records to Firebase
                 val localRecords = database.historyRecordDao().getAllRecords()
                 for (record in localRecords) {
                     repository.saveRecord(record)
                 }
+
+                Log.d("Sync data", "local records are: ${localRecords}")
 
                 // Fetch new records from Firebase and update local database
                 val remoteRecords = repository.getRecords()
@@ -39,8 +41,11 @@ class SyncWorker(
                     database.historyRecordDao().insert(remoteRecord)
                 }
 
+                Log.d("Sync data", "remote records added to the local ones are: ${localRecords}")
+
                 Result.success()
             } catch (e: Exception) {
+                Log.d("Sync data", "Couldn't sync records")
                 e.printStackTrace()
                 Result.failure()
             }

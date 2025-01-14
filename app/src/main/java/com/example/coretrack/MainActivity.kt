@@ -22,9 +22,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val context = this
-        val networkUtils = NetworkUtils(context)
         val authViewModel : AuthViewModel by viewModels()
         val userId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
+        val networkUtils = NetworkUtils(context)
         networkUtils.isConnected().observe(this) { isConnected ->
             if (isConnected) {
                 scheduleSyncWorker(context, userId) // Sync data when online

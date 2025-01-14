@@ -3,11 +3,11 @@ package com.example.coretrack.repository
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.Log
 import com.example.coretrack.database.HistoryRecordDao
 import com.example.coretrack.model.HistoryRecord
 import kotlinx.coroutines.tasks.await
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.await
 
 class HistoryRepository(
     private val localDataSource: HistoryRecordDao,
@@ -29,21 +29,24 @@ class HistoryRepository(
     }
 
     suspend fun deleteRecord(record: HistoryRecord) {
-        // Delete from local database
-        localDataSource.deleteRecord(record)
+        try {
+            localDataSource.deleteRecord(record)
+            Log.d("Delete Record", "Attempting to delete record with ID: ${record.id} | ${record.bpm}, ${record.timestamp}")
+            // Delete from Firebase if online
+            if (isOnline()) {
+                val remoteQuery = remoteDataSource.collection("users")
+                    .document(userId)
+                    .collection("history")
+                    .whereEqualTo("id", record.id)
+                    .get()
+                    .await()
 
-        // Delete from Firebase if online
-        if (isOnline()) {
-            remoteDataSource.collection("users")
-                .document(userId)
-                .collection("history")
-                .whereEqualTo("id", record.id)
-                .get()
-                .addOnSuccessListener { querySnapshot ->
-                    for (document in querySnapshot.documents) {
-                        document.reference.delete()
-                    }
+                for (document in remoteQuery.documents) {
+                    document.reference.delete()
                 }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace() // Log deletion errors
         }
     }
 
@@ -62,10 +65,26 @@ class HistoryRepository(
 
             val records = result.documents.mapNotNull { it.toObject(HistoryRecord::class.java) }
 
-            records
+            val localRecords = localDataSource.getAllRecords()
+            for (record in localRecords) {
+                if (!records.contains(record) ){
+                    remoteDataSource.collection("users")
+                        .document(userId)
+                        .collection("history")
+                        .add(record)
+                }
+            }
+
+            records.forEach { remoteRecord ->
+                if (!localRecords.contains(remoteRecord)){
+                    localDataSource.insert(remoteRecord)
+                }
+            }
+
+            localDataSource.getAllRecords().map { HistoryRecord(id = it.id, bpm = it.bpm, timestamp = it.timestamp) }
         } else {
             // Fetch from local database
-            localDataSource.getAllRecords().map { HistoryRecord(bpm = it.bpm, timestamp = it.timestamp) }
+            localDataSource.getAllRecords().map { HistoryRecord(id = it.id, bpm = it.bpm, timestamp = it.timestamp) }
         }
     }
 

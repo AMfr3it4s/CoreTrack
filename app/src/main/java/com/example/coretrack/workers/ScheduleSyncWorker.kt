@@ -11,7 +11,7 @@ fun scheduleSyncWorker(context: Context, userId: String) {
 
     val inputData = workDataOf("USER_ID" to userId)
 
-    val syncWorkRequest = PeriodicWorkRequestBuilder<SyncWorker>(1, TimeUnit.MINUTES)
+    val syncWorkRequest = PeriodicWorkRequestBuilder<SyncWorker>(15, TimeUnit.MINUTES)
         .setConstraints(constraints)
         .setInputData(inputData)
         .build()

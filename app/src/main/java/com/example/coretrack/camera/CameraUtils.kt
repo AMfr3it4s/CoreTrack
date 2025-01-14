@@ -64,7 +64,6 @@ fun processImageProxy(imageProxy: ImageProxy): Double {
             val V = (vBuffer.getSafe(vIndex)?.toInt() ?: 128) and 0xFF
 
             // 3) Convert YUV → R (ignoring G/B)
-            // See standard YUV to RGB formula
             //  Y ranges [16..235], U/V range [0..255], etc.
             val r = (1.164f * (Y - 16) + 1.596f * (V - 128)).roundToInt()
                 .coerceIn(0, 255)
