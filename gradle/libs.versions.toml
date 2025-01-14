@@ -15,6 +15,8 @@ runtimeLivedata = "1.7.6"
 accompanistPermissions = "0.30.0"
 playServicesLocation = "21.3.0"
 coreKtxVersion = "1.6.1"
+maps = "3.1.0-beta"
+playServicesMaps = "19.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +40,8 @@ ycharts = { group = "co.yml", name = "ycharts", version = "2.1.0" }
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanistPermissions" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
+maps = { group = "com.google.android.libraries.maps", name = "maps", version.ref = "maps" }
+play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,7 +1,9 @@
 package com.example.coretrack
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +26,7 @@ import com.example.coretrack.pages.StepCounterViewModel
 @Composable
 fun Navigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
     val navController = rememberNavController()
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
     Scaffold(
         modifier = modifier,
         bottomBar = {
@@ -70,7 +73,8 @@ fun Navigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
                   //Todo
                 }
                 val stepCounterViewModel: StepCounterViewModel = viewModel()
-                Pedometer( stepCounterViewModel = stepCounterViewModel)
+                Pedometer( stepCounterViewModel = stepCounterViewModel, authViewModel = authViewModel, navController = navController)
+
             }
         }
     }

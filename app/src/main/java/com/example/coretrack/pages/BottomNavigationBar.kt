@@ -39,7 +39,7 @@ fun BottomNavigationBar(navController: NavController) {
                         imageVector = item.icon,
                         contentDescription = item.title,
                         tint = if (currentRoute == item.route) MaterialTheme.colorScheme.tertiary
-                        else MaterialTheme.colorScheme.primary // Cor do ícone
+                        else MaterialTheme.colorScheme.primary
                     )
                 },
                 label = {

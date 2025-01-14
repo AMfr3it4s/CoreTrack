@@ -81,6 +81,18 @@ class StepCounterViewModel : ViewModel() {
         val stepLength = 0.7f
         return (distance / stepLength).toInt()
     }
+
+    fun calculateCalories(steps: Float) : Int {
+        val weight = 75
+        val strideLength = 2.4f
+        return (steps * (strideLength * 0.000473) * ((weight/0.45359237)/100)).toInt()
+    }
+
+    fun calculateDistance (steps: Float) : Float{
+        val stepLength = 0.7f
+        return steps * stepLength
+
+    }
 }
 
 
