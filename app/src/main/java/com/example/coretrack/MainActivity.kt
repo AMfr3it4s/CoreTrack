@@ -1,5 +1,5 @@
 package com.example.coretrack
-
+import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -45,13 +45,6 @@ class MainActivity : ComponentActivity() {
         }
 
         // Composable UI
-        setContent {
-            CoreTrackTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Navigation(modifier = Modifier.padding(innerPadding), authViewModel = authViewModel)
-                }
-            }
-        }
         setContent {
             CoreTrackTheme(){
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
