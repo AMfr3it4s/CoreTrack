@@ -1,8 +1,8 @@
 package com.example.coretrack
+
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,22 +14,22 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
-import androidx.navigation.NavController
+import androidx.core.content.ContextCompat
 import com.example.coretrack.pages.StepCounterViewModel
 import com.example.coretrack.ui.theme.CoreTrackTheme
 import com.example.coretrack.utils.NetworkUtils
 import com.example.coretrack.workers.scheduleSyncWorker
 import com.google.firebase.auth.FirebaseAuth
 
-
 class MainActivity : ComponentActivity() {
     private val stepCounterViewModel: StepCounterViewModel by viewModels()
     private val REQUEST_LOCATION_PERMISSION = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val context = this
-        val authViewModel : AuthViewModel by viewModels()
+        val authViewModel: AuthViewModel by viewModels()
         val userId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
         val networkUtils = NetworkUtils(context)
         stepCounterViewModel.initFusedLocationClient(this)
@@ -46,20 +46,24 @@ class MainActivity : ComponentActivity() {
 
         // Composable UI
         setContent {
-            CoreTrackTheme(){
+            CoreTrackTheme() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Navigation(modifier = Modifier.padding(innerPadding) ,authViewModel = authViewModel, userId = userId)
+                    Navigation(
+                        modifier = Modifier.padding(innerPadding),
+                        authViewModel = authViewModel,
+                        userId = userId
+                    )
                 }
             }
         }
     }
+
     private fun hasLocationPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     }
-
 
     private fun requestLocationPermission() {
         ActivityCompat.requestPermissions(
@@ -79,12 +83,18 @@ class MainActivity : ComponentActivity() {
                 stepCounterViewModel.startTracking(this, true)
             } else {
                 Toast.makeText(this, "Location Permission Denied", Toast.LENGTH_SHORT).show()
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    Toast.makeText(this, "Permission was permanently denied. Please enable it in settings.", Toast.LENGTH_LONG).show()
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    )
+                ) {
+                    Toast.makeText(
+                        this,
+                        "Permission was permanently denied. Please enable it in settings.",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
     }
 }
-}
-

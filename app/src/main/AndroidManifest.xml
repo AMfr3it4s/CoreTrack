@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permissões necessárias -->
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
 
-
+    <!-- Recursos necessários -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <!-- Forçar compatibilidade com biblioteca `ycharts` -->
+    <uses-sdk tools:overrideLibrary="co.yml.charts.components" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoreTrack"
         tools:targetApi="31">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -30,7 +35,6 @@
             android:theme="@style/Theme.CoreTrack">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
