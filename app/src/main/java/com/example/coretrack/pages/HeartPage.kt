@@ -151,34 +151,37 @@ fun HeartMainLayout(
     CameraPermissionRequest {
         Scaffold(
             topBar = {
-                TopAppBar(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .clip(RoundedCornerShape(100.dp)),
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                    ),
-                    windowInsets = WindowInsets(top=0.dp),
-                    title = { Text(
-                        text = "Heart Rate Monitor",
-                        color = MaterialTheme.colorScheme.primary,
-                        fontSize = 17.sp,
-                        fontFamily = Parkinsans,
+                if(!isMeasuring.value)
+                {
+                    TopAppBar(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .clip(RoundedCornerShape(100.dp)),
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                        ),
+                        windowInsets = WindowInsets(top=0.dp),
+                        title = { Text(
+                            text = "Heart Rate Monitor",
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 17.sp,
+                            fontFamily = Parkinsans,
 
-                        ) },
-                    actions = {
-                        IconButton(onClick = { showHistoryPage.value = true }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.List,
-                                contentDescription = "Show history",
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier
-                                    .size(27.dp)
+                            ) },
+                        actions = {
+                            IconButton(onClick = { showHistoryPage.value = true }) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.List,
+                                    contentDescription = "Show history",
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier
+                                        .size(27.dp)
 
-                            )
+                                )
+                            }
                         }
-                    }
-                )
+                    )
+                }
             },
             snackbarHost = {
                 SnackbarHost(hostState = snackbarHostState)
@@ -230,8 +233,8 @@ fun HeartMainLayout(
                             shape = CircleShape,
                             modifier = Modifier.size(180.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFf95f5f),
-                                contentColor = Color.White
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                                contentColor = MaterialTheme.colorScheme.primary
                             )
                         ) {
                             Row(
@@ -241,10 +244,11 @@ fun HeartMainLayout(
                                 Icon(
                                     imageVector = Icons.Default.Favorite,
                                     contentDescription = "Favorite",
-                                    modifier = Modifier.size(40.dp)
+                                    modifier = Modifier.size(40.dp),
+                                    tint = MaterialTheme.colorScheme.tertiary
                                 )
                                 Spacer(modifier = Modifier.width(6.dp))
-                                Text("Start")
+                                Text("Start", fontFamily = Parkinsans, fontSize = 18.sp)
                             }
                         }
 
@@ -306,11 +310,11 @@ fun HeartMainLayout(
                                 }
                             },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFf95f5f),
-                                contentColor = Color.White
+                                containerColor = MaterialTheme.colorScheme.tertiary,
+                                contentColor = MaterialTheme.colorScheme.primary
                             )
                         ) {
-                            Text("Stop Measurement")
+                            Text("Stop Measurement", fontFamily = Parkinsans, color = MaterialTheme.colorScheme.primary)
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -332,12 +336,21 @@ fun HistoryPageInHeart(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("History") },
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .clip(RoundedCornerShape(50.dp)),
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.secondary
+                ),
+                windowInsets = WindowInsets(top = 0.dp)
+                ,
+                title = { Text("History", fontFamily = Parkinsans, color = MaterialTheme.colorScheme.primary)},
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Go back"
+                            contentDescription = "Go back",
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -348,6 +361,7 @@ fun HistoryPageInHeart(
             .fillMaxSize()
             .padding(innerPadding)
         ) {
+            Spacer(modifier = Modifier.height(16.dp))
             LazyColumn {
                 items(history) { record ->
                     HistoryCard(
@@ -362,4 +376,9 @@ fun HistoryPageInHeart(
             }
         }
     }
+}
+
+@Composable
+fun TopBar(modifier: Modifier = Modifier) {
+
 }

@@ -52,7 +52,6 @@ fun Pedometer(stepCounterViewModel: StepCounterViewModel, authViewModel: AuthVie
         }
     }
 
-
     LaunchedEffect(authState.value) {
         when (authState.value) {
             is AuthState.Unauthenticated -> navController.navigate("login")
@@ -213,8 +212,8 @@ fun DrawerContent(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
             authViewModel.signOut()
         },
         colors = NavigationDrawerItemDefaults.colors(
-            selectedContainerColor = Color.White,
-            unselectedContainerColor = Color.White
+            selectedContainerColor = MaterialTheme.colorScheme.primary.copy(0.8f),
+            unselectedContainerColor = MaterialTheme.colorScheme.primary.copy(0.8f)
         )
     )
 }
