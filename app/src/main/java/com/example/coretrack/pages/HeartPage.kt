@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
@@ -17,9 +18,11 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.coretrack.camera.CameraPreviewWithAnalysis
 import com.example.coretrack.database.AppDatabase
@@ -27,6 +30,7 @@ import com.example.coretrack.model.HistoryRecord
 import com.example.coretrack.repository.HistoryRepository
 import com.example.coretrack.ui.components.HeartRateChart
 import com.example.coretrack.ui.components.HistoryCard
+import com.example.coretrack.ui.theme.Parkinsans
 import com.example.coretrack.utils.calculateBPM
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
@@ -148,12 +152,29 @@ fun HeartMainLayout(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(text = "Heart Rate Monitor") },
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .clip(RoundedCornerShape(100.dp)),
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.secondary,
+                    ),
+                    windowInsets = WindowInsets(top=0.dp),
+                    title = { Text(
+                        text = "Heart Rate Monitor",
+                        color = MaterialTheme.colorScheme.primary,
+                        fontSize = 17.sp,
+                        fontFamily = Parkinsans,
+
+                        ) },
                     actions = {
                         IconButton(onClick = { showHistoryPage.value = true }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.List,
-                                contentDescription = "Show history"
+                                contentDescription = "Show history",
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier
+                                    .size(27.dp)
+
                             )
                         }
                     }

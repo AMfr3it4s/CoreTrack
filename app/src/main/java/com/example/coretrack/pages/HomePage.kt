@@ -171,10 +171,10 @@ fun HomePage(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             // Card 1 - Calories
-            CardStats(title = "Calories", value = "2000", unit = "Kcal")
+            CardStats(title = "Calories", value = "500", unit = "Kcal")
 
             // Card 2 - Distance
-            CardStats(title = "Distance", value = "10", unit = "Km")
+            CardStats(title = "Distance", value = "2", unit = "Km")
 
             // Card 3 - Time
             CardStats(title = "Time", value = "60", unit = "Min")
