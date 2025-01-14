@@ -25,8 +25,8 @@ import androidx.navigation.NavController
 import com.example.coretrack.AuthState
 import com.example.coretrack.AuthViewModel
 import com.example.coretrack.ui.theme.Parkinsans
-import com.google.android.gms.location.LocationServices
 
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
 
 import kotlinx.coroutines.launch
@@ -134,7 +134,7 @@ fun Pedometer(stepCounterViewModel: StepCounterViewModel, authViewModel: AuthVie
                     if (isTracking.value) {
                         Text(
                             text = "Current Step Count ${stepCount.value}",
-                            color = MaterialTheme.colorScheme.surface,
+                            color = Color.Black,
                             fontFamily = Parkinsans,
                             fontWeight = FontWeight.Bold,
                             fontSize = 15.sp
@@ -188,7 +188,7 @@ fun DrawerContent(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
         text = "CoreTrack Settings",
         fontSize = 24.sp,
         modifier = Modifier.padding(16.dp),
-        color = MaterialTheme.colorScheme.surface,
+        color = Color.Black,
         fontFamily = Parkinsans
     )
     NavigationDrawerItem(
@@ -196,7 +196,7 @@ fun DrawerContent(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
             Icon(
                 imageVector = Icons.Rounded.Settings,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.surface,
+                tint = Color.Black,
             )
         },
         label = {
@@ -204,7 +204,7 @@ fun DrawerContent(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
                 text = "Logout",
                 fontSize = 15.sp,
                 modifier = Modifier.padding(16.dp),
-                color = MaterialTheme.colorScheme.surface,
+                color = Color.Black,
                 fontFamily = Parkinsans
             )
         },

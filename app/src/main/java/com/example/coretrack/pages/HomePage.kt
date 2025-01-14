@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.coretrack.AuthState
 import com.example.coretrack.AuthViewModel
+import com.example.coretrack.model.HistoryRecord
 import com.example.coretrack.ui.theme.Parkinsans
 import java.time.format.TextStyle
 
@@ -42,6 +43,7 @@ fun HomePage(
     navController: NavController,
     authViewModel: AuthViewModel
 ) {
+
     val authState = authViewModel.authState.observeAsState()
     LaunchedEffect(authState.value) {
         when (authState.value) {
