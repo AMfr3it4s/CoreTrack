@@ -1,29 +1,32 @@
 package com.example.coretrack
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.coretrack.pages.ActivitiesPage
 import com.example.coretrack.pages.BottomNavigationBar
 import com.example.coretrack.pages.HeartPage
 import com.example.coretrack.pages.HomePage
 import com.example.coretrack.pages.LoginPage
+import com.example.coretrack.pages.Pedometer
 import com.example.coretrack.pages.RegisterPage
 import com.example.coretrack.pages.StepCounterViewModel
-import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun Navigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
     val navController = rememberNavController()
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
     Scaffold(
         modifier = modifier,
         bottomBar = {
@@ -67,14 +70,11 @@ fun Navigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
                     backStackEntry ->
                 val isDarkMode by remember { mutableStateOf(false) }
                 val onToggleTheme: (Boolean) -> Unit = { newMode ->
-                    // Lógica para alternar entre os modos claro e escuro
+                  //Todo
                 }
-                ActivitiesPage(
-                    navController = navController,
-                    authViewModel = authViewModel,
-                    isDarkMode = isDarkMode,
-                    onToggleTheme = onToggleTheme
-                )
+                val stepCounterViewModel: StepCounterViewModel = viewModel()
+                Pedometer( stepCounterViewModel = stepCounterViewModel, authViewModel = authViewModel, navController = navController)
+
             }
         }
     }
