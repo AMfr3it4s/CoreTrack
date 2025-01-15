@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -109,7 +110,7 @@ fun RegisterPage(modifier: Modifier = Modifier, navController: NavController, au
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             // Title
-            Text(text = "Join us and start your health journey!", fontWeight = FontWeight.Thin, fontFamily = Parkinsans, fontSize = 16.sp, color = MaterialTheme.colorScheme.primary)
+            Text(text = "Join us and start your health journey!", fontWeight = FontWeight.Thin, fontFamily = Parkinsans, fontSize = 16.sp, color = MaterialTheme.colorScheme.onPrimary)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -166,7 +167,7 @@ fun RegisterPage(modifier: Modifier = Modifier, navController: NavController, au
             ) {
                 Text(text = "Already have an account, Login", fontFamily = Parkinsans, color = MaterialTheme.colorScheme.tertiary)
             }
-    }
+        }
 
     }
 }
