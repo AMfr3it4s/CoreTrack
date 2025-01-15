@@ -13,9 +13,17 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
+    <uses-feature android:name="android.hardware.camera.flash"/>
 
+<<<<<<< Updated upstream
     <!-- Forçar compatibilidade com biblioteca `ycharts` -->
     <uses-sdk tools:overrideLibrary="co.yml.charts.components" />
+=======
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+>>>>>>> Stashed changes
 
     <application
         android:allowBackup="true"

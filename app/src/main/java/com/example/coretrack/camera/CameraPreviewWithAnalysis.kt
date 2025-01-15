@@ -61,7 +61,7 @@ fun CameraPreviewWithAnalysis(
 
                 // Unbind use cases before rebinding
                 cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(
+                camera = cameraProvider.bindToLifecycle(
                     lifecycleOwner,
                     cameraSelector,
                     preview,
